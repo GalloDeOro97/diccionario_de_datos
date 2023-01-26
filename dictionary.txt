@@ -1,0 +1,12 @@
+Nombres:Numero de Caracteres
+Clave Municipio:5
+"Clave 
+Estado":2
+Región:20
+Estado:19
+Municipio:38
+Población:9
+Población Adulta:9
+Población Adulta Mujeres:7
+Población Adulta Hombres:7
+Tipo de población:15

@@ -8,7 +8,7 @@ Created on Mon Mar 28 22:26:20 2022
 
 import pandas as pd
 import numpy as np
-import csv
+#import csv
 from datetime import datetime
 
 
@@ -123,38 +123,42 @@ def makeDic(data_frame):
     return dic
 def makeArrayData(column, n_char):
     n = n_char - len(str(column))
-    return (str(column).ljust(len(str(column)) + n ))
+    return (str(str(column).ljust(len(str(column)) + n )))
 # Pasamos la data de un data frame a un texto plano
-def makeData(data_frame,id):
+def makeData(data_frame,ID, dic):
     with open("DATA.txt", "w") as file:
-        for j in range(len(data_frame[id])):
-            array = []
+        for j in range(len(data_frame[str(ID)])):
+            array_aux = []
+            #print(j)
             for column in data_frame.columns:
-                array.append(data_frame[column][j])
+                #print(column)
+                array_aux.append(str(data_frame[str(column)][j]))
             string_to_write = ''
-            for i in range(len(array)):
-                string_to_write +=  makeArrayData(array[i],dic['Numero de Caracteres'][i])
+            for i in range(len(array_aux)):
+                string_to_write +=  str(makeArrayData(array_aux[i],dic['Numero de Caracteres'][i]))
         file.write(string_to_write+'\n')
+        #file.write(str(j)+'\n')
     file.close()
 
-#Funciones que son asignadas a variables
-path_stock = r"C:\Users\AA40000\Desktop\stock_actual.csv"
-stock_actual = pd.read_csv(path_stock, sep = ',')
-dic = makeDic(stock_actual)
-makeData(stock_actual, 'Dossier')
+# Generar datos de prueba
+data = np.random.randint(1,1000,size=(2000,10))
+# Crear data frame
+data_test_1 = pd.DataFrame(data, columns= 
+        ['ID','col1','col2','col3','col4','col5','col6','col7','col8','col9'])
+#print(data_test)
+data_test_1 = data_test_1.apply(lambda x: x.astype(str))
+data_test = pd.read_csv('data_test_2.csv', sep=',')
+print(data_test.shape)
+dic = makeDic(data_test)
+print(dic)
+makeData(data_test, 'Clave Municipio',dic)
 PATH_1 = "dictionary.txt"
 PATH_2 = "DATA.txt"
-#dic_1 = readDic(PATH_1,":", 0, 1, 1)
 dic_1 = readDict2(PATH_1, ':')
 data_2 = readDataAsarray(PATH_2)
 db = makeDB(dic_1, 
             data_2,
             "Nombres",
             "Numero de Caracteres")
-#Funciones que no regresan valores
-exportDB(db,'nueva_tabla')
+exportDB(db,'nueva_tabla_')
 
-# Analisis exploratorio
-#describir(db, "DATEOFFRE")
-#extractdb(db)
-#print(db["DATEOFRE"])
